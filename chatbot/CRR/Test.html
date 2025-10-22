@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-image: url('/mnt/data/image.png'); /* data:image/png;base64,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 */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        #chatbox {
+            width: 400px;
+            height: 300px;
+            border: 1px solid #ccc;
+            overflow-y: auto;
+            margin: auto;
+            padding: 10px;
+            display: none;
+            background: rgba(255, 255, 255, 0.8);
+        }
+        #questionSelect, #askButton {
+            display: none;
+        }
+        #loginBox {
+            margin: auto;
+            width: 300px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background: rgba(255, 255, 255, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <div id="loginBox">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Username"><br><br>
+        <input type="password" id="password" placeholder="Password"><br><br>
+        <button onclick="login()">Login</button>
+    </div>
+    
+    <div id="chatContainer" style="display:none;">
+        <h2>College Chatbot</h2>
+        <div id="chatbox"></div>
+        <select id="questionSelect">
+            <option value="best_college">Which college is the best one?</option>
+            <option value="top_colleges">What are the top 5 colleges currently?</option>
+            <option value="low_fee">Which college has less fee structure?</option>
+            <option value="cultural_activities">Which college has better cultural activities?</option>
+            <option value="highest_rating">Which college has the highest rating?</option>
+            <option value="oldest_college">Which is the oldest college?</option>
+        </select>
+        <button id="askButton">Ask</button>
+    </div>
+    
+    <script>
+        function login() {
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+            
+            if (username === "abc" && password === "123") {
+                document.getElementById("loginBox").style.display = "none";
+                document.getElementById("chatContainer").style.display = "block";
+                document.getElementById("chatbox").style.display = "block";
+                document.getElementById("questionSelect").style.display = "inline-block";
+                document.getElementById("askButton").style.display = "inline-block";
+            } else {
+                alert("Invalid username or password");
+            }
+        }
+
+        const dataset = {
+            best_college: "Based on ratings, the best college is National Institute of Technology Rourkela.",
+            top_colleges: "The top 5 colleges currently are: NIT Rourkela, VNIT Nagpur, NSUT Delhi, BIT Ranchi, and IIIT Hyderabad.",
+            low_fee: "The college with the lowest fee structure is National Institute of Technology Rourkela with an average fee of 350600 INR.",
+            cultural_activities: "Birla Institute of Technology Ranchi is known for its vibrant cultural activities.",
+            highest_rating: "National Institute of Technology Rourkela has the highest rating of 3.12.",
+            oldest_college: "Birla Institute of Technology Ranchi is the oldest college, established in 1955."
+        };
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("askButton").addEventListener("click", answerQuestion);
+        });
+
+        function answerQuestion() {
+            let questionKey = document.getElementById("questionSelect").value;
+            let chatbox = document.getElementById("chatbox");
+            
+            chatbox.innerHTML += `<p><strong>You:</strong> ${document.getElementById("questionSelect").selectedOptions[0].text}</p>`;
+            
+            let response = dataset[questionKey] || "I'm sorry, I don't have an answer for that.";
+            chatbox.innerHTML += `<p><strong>Bot:</strong> ${response}</p>`;
+            
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+    </script>
+</body>
+</html>

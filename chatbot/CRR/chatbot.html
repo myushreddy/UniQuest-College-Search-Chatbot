@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>College Chatbot</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('https://images.unsplash.com/photo-1571260899304-425eee4c7efc?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .overlay {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    h2 {
+      font-size: 32px;
+      color: #2c3e50;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px #fff;
+    }
+
+    #chatbox {
+      width: 100%;
+      max-width: 700px;
+      height: 450px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      padding: 20px;
+      overflow-y: auto;
+      margin-bottom: 25px;
+    }
+
+    .message {
+      margin: 10px 0;
+      padding: 12px 18px;
+      max-width: 75%;
+      border-radius: 18px;
+      line-height: 1.5;
+      font-size: 15px;
+      word-wrap: break-word;
+    }
+
+    .user {
+      background-color: #e3f2fd;
+      color: #0d47a1;
+      margin-left: auto;
+      text-align: right;
+    }
+
+    .bot {
+      background-color: #e8f5e9;
+      color: #1b5e20;
+      margin-right: auto;
+      text-align: left;
+    }
+
+    #questionSelect {
+      width: 100%;
+      max-width: 700px;
+      padding: 12px 16px;
+      font-size: 16px;
+      border-radius: 12px;
+      border: 1px solid #aaa;
+      margin-bottom: 15px;
+      background-color: #ffffffdd;
+    }
+
+    #askButton {
+      background-color: #2e86de;
+      color: white;
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    #askButton:hover {
+      background-color: #1b4f72;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: rgba(100,100,100,0.4);
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <h2>🎓 UniQuest</h2>
+    <div id="chatbox"></div>
+    <select id="questionSelect">
+      <option value="best_college">Which college is the best one?</option>
+      <option value="top_colleges">What are the top 5 colleges currently?</option>
+      <option value="low_fee">Which college has less fee structure?</option>
+      <option value="cultural_activities">Which college has better cultural activities?</option>
+      <option value="highest_rating">Which college has the highest rating?</option>
+      <option value="oldest_college">Which is the oldest college?</option>
+      <option value="placement_rate">Which college has the highest placement rate?</option>
+      <option value="hostel_facilities">Which college has the best hostel facilities?</option>
+      <option value="international_exposure">Which college offers good international exposure?</option>
+      <option value="entrepreneurship_support">Which college supports startups and entrepreneurship?</option>
+      <option value="research_opportunities">Which college is best for research opportunities?</option>
+      <option value="sports_facilities">Which college has the best sports facilities?</option>
+      <option value="student_clubs">Which college has the most active student clubs?</option>
+      <option value="safe_for_girls">Which is the safest college for girls?</option>
+      <option value="modern_infrastructure">Which college has the most modern infrastructure?</option>
+      <option value="distance_learning">Which college offers the best distance learning programs?</option>
+    </select>
+    <br>
+    <button id="askButton">Ask</button>
+  </div>
+
+  <script>
+    const dataset = {
+      best_college: "🎓 Based on ratings, the best college is National Institute of Technology Rourkela.",
+      top_colleges: "🏆 The top 5 colleges currently are: NIT Rourkela, VNIT Nagpur, NSUT Delhi, BIT Ranchi, and IIIT Hyderabad.",
+      low_fee: "💸 The college with the lowest fee structure is National Institute of Technology Rourkela with an average fee of ₹3,50,600.",
+      cultural_activities: "🎭 Birla Institute of Technology Ranchi is known for its vibrant cultural activities.",
+      highest_rating: "⭐ National Institute of Technology Rourkela has the highest rating of 3.12.",
+      oldest_college: "🏛️ Birla Institute of Technology Ranchi is the oldest college, established in 1955.",
+      placement_rate: "💼 IIIT Hyderabad has one of the highest placement rates in India, with average packages exceeding ₹15 LPA.",
+      hostel_facilities: "🏨 Vellore Institute of Technology (VIT) is famous for its well-maintained and secure hostel facilities.",
+      international_exposure: "🌏 Amity University offers various student exchange and international collaboration programs.",
+      entrepreneurship_support: "🚀 IIT Madras is known for strong entrepreneurship support through its Incubation Cell and Nirmaan.",
+      research_opportunities: "🔬 IISc Bangalore is the top destination for cutting-edge research in science and engineering.",
+      sports_facilities: "⚽ LPU (Lovely Professional University) has world-class indoor and outdoor sports facilities.",
+      student_clubs: "🎉 BITS Pilani boasts of the most active student-run clubs and tech/cultural fests.",
+      safe_for_girls: "👩‍🎓 SNDT Women’s University and Mount Carmel College are among the safest colleges for girls.",
+      modern_infrastructure: "🏢 Shiv Nadar University offers excellent modern infrastructure with smart classrooms and labs.",
+      distance_learning: "🧑‍💻 IGNOU is considered the best for distance learning with extensive course material and flexibility."
+    };
+
+    document.getElementById("askButton").addEventListener("click", () => {
+      const select = document.getElementById("questionSelect");
+      const chatbox = document.getElementById("chatbox");
+      const questionKey = select.value;
+      const questionText = select.selectedOptions[0].text;
+      const response = dataset[questionKey] || "🤖 Sorry, I don’t have information on that.";
+
+      chatbox.innerHTML += `<div class="message user"><strong>You:</strong> ${questionText}</div>`;
+      chatbox.innerHTML += `<div class="message bot"><strong>Bot:</strong> ${response}</div>`;
+      chatbox.scrollTop = chatbox.scrollHeight;
+    });
+  </script>
+</body>
+</html>

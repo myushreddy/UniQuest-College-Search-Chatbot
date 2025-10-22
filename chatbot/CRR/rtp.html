@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #chatbox {
+            width: 400px;
+            height: 300px;
+            border: 1px solid #ccc;
+            overflow-y: auto;
+            margin: auto;
+            padding: 10px;
+        }
+        #questionSelect {
+            width: 80%;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>College Chatbot</h2>
+    <div id="chatbox"></div>
+    <select id="questionSelect">
+        <option value="best_college">Which college is the best one?</option>
+        <option value="top_colleges">What are the top 5 colleges currently?</option>
+        <option value="low_fee">Which college has less fee structure?</option>
+        <option value="cultural_activities">Which college has better cultural activities?</option>
+        <option value="highest_rating">Which college has the highest rating?</option>
+        <option value="oldest_college">Which is the oldest college?</option>
+    </select>
+    <button id="askButton">Ask</button>
+    
+    <script>
+        const dataset = {
+            best_college: "Based on ratings, the best college is National Institute of Technology Rourkela.",
+            top_colleges: "The top 5 colleges currently are: NIT Rourkela, VNIT Nagpur, NSUT Delhi, BIT Ranchi, and IIIT Hyderabad.",
+            low_fee: "The college with the lowest fee structure is National Institute of Technology Rourkela with an average fee of 350600 INR.",
+            cultural_activities: "Birla Institute of Technology Ranchi is known for its vibrant cultural activities.",
+            highest_rating: "National Institute of Technology Rourkela has the highest rating of 3.12.",
+            oldest_college: "Birla Institute of Technology Ranchi is the oldest college, established in 1955."
+        };
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("askButton").addEventListener("click", answerQuestion);
+        });
+
+        function answerQuestion() {
+            let questionKey = document.getElementById("questionSelect").value;
+            let chatbox = document.getElementById("chatbox");
+            
+            chatbox.innerHTML += <p><strong>You:</strong> ${document.getElementById("questionSelect").selectedOptions[0].text}</p>;
+            
+            let response = dataset[questionKey] || "I'm sorry, I don't have an answer for that.";
+            chatbox.innerHTML += <p><strong>Bot:</strong> ${response}</p>;
+            
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+    </script>
+</body>
+</html>
