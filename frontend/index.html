@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniQuest - College Search Chatbot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <h1>🎓 UniQuest</h1>
+                <p>Your AI-Powered College Search Assistant</p>
+            </div>
+        </header>
+
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="status-indicator online"></div>
+                <span>UniQuest Assistant is online</span>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot-message">
+                    <div class="message-content">
+                        <h3>👋 Hello! I'm UniQuest, your college search assistant!</h3>
+                        <p>I can help you find engineering colleges based on:</p>
+                        <ul>
+                            <li>🏷️ <strong>Fees & Budget</strong> - "Show me colleges under 5 lakhs"</li>
+                            <li>📍 <strong>Location</strong> - "Best colleges in Mumbai"</li>
+                            <li>⭐ <strong>Ratings</strong> - "Highest rated colleges"</li>
+                            <li>🏠 <strong>Facilities</strong> - "Colleges with hostels and gym"</li>
+                            <li>📚 <strong>Courses</strong> - "Computer science colleges"</li>
+                            <li>🏛️ <strong>College Type</strong> - "Government colleges"</li>
+                        </ul>
+                        <p>Try asking me something like: <em>"Show me affordable government colleges in Karnataka for computer science"</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <h4>🚀 Quick Questions:</h4>
+                <div class="quick-buttons">
+                    <button class="quick-btn" data-query="Which college is the best?">Best College</button>
+                    <button class="quick-btn" data-query="What are the top 5 colleges?">Top 5 Colleges</button>
+                    <button class="quick-btn" data-query="Which college has less fee?">Cheapest Colleges</button>
+                    <button class="quick-btn" data-query="Which college has the highest rating?">Highest Rated</button>
+                    <button class="quick-btn" data-query="Show me colleges in Mumbai">Mumbai Colleges</button>
+                    <button class="quick-btn" data-query="Best colleges for computer science">CS Colleges</button>
+                </div>
+            </div>
+
+            <div class="chat-input-container">
+                <div class="input-group">
+                    <input 
+                        type="text" 
+                        id="messageInput" 
+                        placeholder="Ask me about colleges... (e.g., 'cheap colleges in Delhi')"
+                        autocomplete="off"
+                    >
+                    <button id="sendButton">
+                        <span class="send-text">Send</span>
+                        <span class="send-icon">📤</span>
+                    </button>
+                </div>
+                <div class="typing-indicator" id="typingIndicator">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>&copy; 2025 UniQuest - Helping students find their perfect college</p>
+        </footer>
+    </div>
+
+    <script src="../assets/js/script.js"></script>
+</body>
+</html>
