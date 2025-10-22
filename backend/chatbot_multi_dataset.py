@@ -24,35 +24,28 @@ class MultiDatasetCollegeChatbot:
                 self.df_main = pd.read_csv(main_path)
                 # Clean up fee data
                 self.df_main['Average Fees'] = pd.to_numeric(self.df_main['Average Fees'], errors='coerce')
-                print(f"[SUCCESS] Main dataset: Loaded {len(self.df_main)} colleges with detailed info")
+                print(f"✅ Main dataset: Loaded {len(self.df_main)} colleges with detailed info")
             else:
-                print("[ERROR] Main dataset not found")
+                print("❌ Main dataset not found")
                 
             # Dataset 2: NIRF Rankings
             nirf_path = os.path.join(base_path, 'NIRF Ranking for Engineering Colleges 2024.csv')
             if os.path.exists(nirf_path):
                 self.df_nirf = pd.read_csv(nirf_path)
-                print(f"[SUCCESS] NIRF dataset: Loaded {len(self.df_nirf)} ranked colleges")
+                print(f"✅ NIRF dataset: Loaded {len(self.df_nirf)} ranked colleges")
             else:
-                print("[ERROR] NIRF dataset not found")
+                print("❌ NIRF dataset not found")
                 
             # Dataset 3: Course-specific data
             course_path = os.path.join(base_path, 'Engineering.csv')
             if os.path.exists(course_path):
-                # Try different encodings for the problematic CSV file
-                try:
-                    self.df_courses = pd.read_csv(course_path, encoding='utf-8')
-                except UnicodeDecodeError:
-                    try:
-                        self.df_courses = pd.read_csv(course_path, encoding='latin-1')
-                    except:
-                        self.df_courses = pd.read_csv(course_path, encoding='cp1252')
-                print(f"[SUCCESS] Course dataset: Loaded {len(self.df_courses)} course entries")
+                self.df_courses = pd.read_csv(course_path)
+                print(f"✅ Course dataset: Loaded {len(self.df_courses)} course entries")
             else:
-                print("[ERROR] Course dataset not found")
+                print("❌ Course dataset not found")
                 
         except Exception as e:
-            print(f"[ERROR] Error loading data: {str(e)}")
+            print(f"❌ Error loading data: {str(e)}")
             
     def normalize_college_name(self, name):
         """Normalize college names for better matching across datasets"""
@@ -257,28 +250,28 @@ class MultiDatasetCollegeChatbot:
         if len(results) == 0:
             return "No colleges found matching your criteria."
         
-        response = f"Found {len(results)} college(s) in our detailed database:\n\n"
+        response = f"🎓 Found {len(results)} college(s) in our detailed database:\n\n"
         
         for idx, (_, college) in enumerate(results.iterrows(), 1):
             response += f"{idx}. **{college['College Name']}**\n"
-            response += f"Location: {college['City']}, {college['State']}\n"
+            response += f"📍 Location: {college['City']}, {college['State']}\n"
             
             if pd.notna(college['Rating']):
-                response += f"Rating: {college['Rating']}/5.0\n"
+                response += f"⭐ Rating: {college['Rating']}/5.0\n"
             
             if pd.notna(college['Average Fees']):
                 fees_in_lakhs = college['Average Fees'] / 100000
-                response += f"Average Fees: Rs.{fees_in_lakhs:.2f} lakhs\n"
+                response += f"💰 Average Fees: ₹{fees_in_lakhs:.2f} lakhs\n"
             
-            response += f"Type: {college['College Type']}\n"
+            response += f"🏫 Type: {college['College Type']}\n"
             
             if pd.notna(college['Established Year']):
-                response += f"Established: {int(college['Established Year'])}\n"
+                response += f"📅 Established: {int(college['Established Year'])}\n"
             
             # Add NIRF ranking if available
             college_info = self.find_college_across_datasets(college['College Name'])
             if 'nirf' in college_info:
-                response += f"NIRF Rank: {int(college_info['nirf']['Rank'])}\n"
+                response += f"🏆 NIRF Rank: {int(college_info['nirf']['Rank'])}\n"
             
             response += "\n"
         
@@ -286,22 +279,22 @@ class MultiDatasetCollegeChatbot:
     
     def format_nirf_results(self, results, query):
         """Format NIRF ranking results"""
-        response = f"NIRF Ranked Engineering Colleges ({len(results)} results):\n\n"
+        response = f"🏆 NIRF Ranked Engineering Colleges ({len(results)} results):\n\n"
         
         for idx, (_, college) in enumerate(results.iterrows(), 1):
             response += f"{idx}. **{college['Name']}** (Rank: {int(college['Rank'])})\n"
-            response += f"Location: {college['City']}, {college['State']}\n"
+            response += f"📍 Location: {college['City']}, {college['State']}\n"
             
             # Try to get additional info from main dataset
             college_info = self.find_college_across_datasets(college['Name'])
             if 'main' in college_info:
                 main_info = college_info['main']
                 if pd.notna(main_info['Rating']):
-                    response += f"Rating: {main_info['Rating']}/5.0\n"
+                    response += f"⭐ Rating: {main_info['Rating']}/5.0\n"
                 if pd.notna(main_info['Average Fees']):
                     fees_in_lakhs = main_info['Average Fees'] / 100000
-                    response += f"Average Fees: Rs.{fees_in_lakhs:.2f} lakhs\n"
-                response += f"Type: {main_info['College Type']}\n"
+                    response += f"💰 Average Fees: ₹{fees_in_lakhs:.2f} lakhs\n"
+                response += f"🏫 Type: {main_info['College Type']}\n"
             
             response += "\n"
         
@@ -309,7 +302,7 @@ class MultiDatasetCollegeChatbot:
     
     def format_course_results(self, unique_colleges, course_data, query):
         """Format course-specific results"""
-        response = f"Engineering Colleges offering relevant courses ({len(unique_colleges)} colleges):\n\n"
+        response = f"🎯 Engineering Colleges offering relevant courses ({len(unique_colleges)} colleges):\n\n"
         
         for idx, college_name in enumerate(unique_colleges, 1):
             response += f"{idx}. **{college_name}**\n"
@@ -317,7 +310,7 @@ class MultiDatasetCollegeChatbot:
             # Get courses offered at this college
             college_courses = course_data[course_data['college name'] == college_name]['Course'].unique()
             if len(college_courses) > 0:
-                response += f"Courses: {', '.join(college_courses[:3])}"
+                response += f"📚 Courses: {', '.join(college_courses[:3])}"
                 if len(college_courses) > 3:
                     response += f" (+{len(college_courses)-3} more)"
                 response += "\n"
@@ -327,14 +320,14 @@ class MultiDatasetCollegeChatbot:
             
             if 'main' in college_info:
                 main_info = college_info['main']
-                response += f"Location: {main_info['City']}, {main_info['State']}\n"
+                response += f"📍 Location: {main_info['City']}, {main_info['State']}\n"
                 if pd.notna(main_info['Average Fees']):
                     fees_in_lakhs = main_info['Average Fees'] / 100000
-                    response += f"Average Fees: Rs.{fees_in_lakhs:.2f} lakhs\n"
+                    response += f"💰 Average Fees: ₹{fees_in_lakhs:.2f} lakhs\n"
             elif 'nirf' in college_info:
                 nirf_info = college_info['nirf']
-                response += f"Location: {nirf_info['City']}, {nirf_info['State']}\n"
-                response += f"NIRF Rank: {int(nirf_info['Rank'])}\n"
+                response += f"📍 Location: {nirf_info['City']}, {nirf_info['State']}\n"
+                response += f"🏆 NIRF Rank: {int(nirf_info['Rank'])}\n"
             
             response += "\n"
         
